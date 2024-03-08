@@ -52,7 +52,7 @@ const TaskPanel = ({ view, viewId }) => {
           </div>
           <div>{view.tasks.length}</div>
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center text-xl">
             <p className="text-gray-400 mb-[6px]">...</p>
             <button
             onClick={() => setIsInputVisible(true)}
@@ -71,7 +71,7 @@ const TaskPanel = ({ view, viewId }) => {
             onClick={() => toggleTaskSideBar(task.id)}
             className="flex px-3 hover:scale-105 hover:bg-gray-50 duration-300 py-1.5 bg-white drop-shadow-sm rounded w-full cursor-pointer border border-gray-200"
           >
-            <div className="text-slate-700 font-semibold text-sm">
+            <div className="text-slate-700 font-semibold text-[20px]">
               {task.title}
             </div>
           </div>
@@ -81,7 +81,7 @@ const TaskPanel = ({ view, viewId }) => {
             <input
               id="input"
               type="text"
-              className="w-full text-slate-700 placeholder:font-normal font-semibold text-sm outline-none"
+              className="w-full text-slate-700 placeholder:font-normal font-semibold text-[20px] outline-none px-4"
               placeholder="Add Task Title..."
               autoFocus
               value={inputValue}
@@ -99,10 +99,10 @@ const TaskPanel = ({ view, viewId }) => {
         )}
 
         <button
-          className="text-gray-400 text-left px-1 text-sm mt-2 cursor-pointer focus:outline-blue-400/80"
+          className="text-gray-400 text-lg text-left px-1 mt-2 cursor-pointer focus:outline-blue-400/80"
           onClick={() => setIsInputVisible(true)}
         >
-          + New Task
+          + New
         </button>
       </div>
       <TaskSideBar

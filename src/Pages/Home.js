@@ -33,7 +33,7 @@ const Home = () => {
                 type="text"
                 value={newViewName}
                 onChange={inputChangeHandler}
-                className="text-slate-700 px-2 rounded-md bg-orange-300/20 focus:outline-none font-semibold text-sm"
+                className="text-slate-700 px-2 rounded-md bg-orange-600/20 focus:outline-none font-semibold text-sm"
                 onKeyDown={(e) =>
                 e.key === "Enter" && newViewName && handleCreateNewView()
                 }

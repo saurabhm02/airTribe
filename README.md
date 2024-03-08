@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# Internship Assignment - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a frontend implementation of a project board similar to Trello or Notion, designed for managing tasks and their statuses.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Drag and Drop**: Users can drag and drop tasks/cards from one status to another for easy management.
+- **Add Tasks**: Users can add tasks using the "New" button under any status.
+- **Task Details**: Clicking on a task opens a new page where users can change the title, status, and description of the task. Tasks can also be deleted from the details page.
+- **Local Storage**: Information is stored in local storage for persistence or can use [JSONPlaceholder](https://jsonplaceholder.typicode.com/) for API integration.
+- **Card Count**: The board displays the count of cards under each status for better organization.
 
-### `npm start`
+## Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Framework**: Preferably developed using Nuxt.js for server-side rendering and SEO benefits.
+- **CSS Framework**: Utilize any CSS framework for styling purposes to enhance the UI.
+  
+## Submission Guidelines
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Live Hosting**: Host the project live on a platform like Netlify or GitHub Pages to make it accessible.
+- **GitHub Link**: Share the GitHub repository link for reviewing the codebase and project structure.
 
-### `npm test`
+## Brownie Points
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Add New Status**: Implement the option to add a new status dynamically to customize the board.
+- **UI Design**: Design a visually appealing user interface resembling the provided screenshot for a better user experience.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for considering this assignment! 

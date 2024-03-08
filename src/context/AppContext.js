@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export const AppContext = createContext();
 
@@ -6,90 +6,100 @@ export const useAppContext = () =>{
     return useContext(AppContext);
 }
 
-const useLocalStorage = (key, initalValue) => {
-    const [storedValue, setStoredValue ] = useState(() =>{
-        try{
-            const item = localStorage.getItem(key);
-            return item? JSON.parse(item) : initalValue;
-        }
-        catch(error){
-            console.log("Error while fecthcing localStorage: ", error);
-            return initalValue;
-        }
-    });
-
-    const setValue = (value) => {
-        try{
-            setStoredValue(value);
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-        catch(error){
-            console.log("error while storing in localStorage: ", error);
-        }
-    };
-
-    return [storedValue, setValue];
-}
-
 export const AppProvider = ({ children }) =>{
-    const [viewItems, setViewItems ] = useLocalStorage("viewitems", [
-        {
-            name: "Not started",
+  const [viewItems, setViewItems ] = useState([
+    {
+        name: "Not started",
+        id: 1,
+        color: "bg-red-300/80",
+        tasks: [
+          {
+            title: "Card 4",
             id: 1,
-            color: "bg-red-300/20",
-            tasks: [
-              {
-                title: "Card 4",
-                id: 1,
-                description: "This is card no 4",
-              },
-              {
-                title: "Card 1",
-                id: 2,
-                description: "This is card no 1",
-              },
-              {
-                title: "Card 5",
-                id: 3,
-                description: "This is card no 5",
-              },
-            ],
+            description: "This is card no 4",
           },
           {
-            name: "In progress",
+            title: "Card 1",
             id: 2,
-            color: "bg-yellow-300/20",
-            tasks: [
-              {
-                title: "Card 2",
-                id: 4,
-                description: "This is card no 2",
-              },
-            ],
+            description: "This is card no 1",
           },
           {
-            name: "Completed",
+            title: "Card 5",
             id: 3,
-            color: "bg-green-300/20",
-            tasks: [
-              {
-                title: "Card 3",
-                id: 5,
-                description: "This is card no 3",
-              },
-            ],
-        }, 
-    ]);
+            description: "This is card no 5",
+          },
+        ],
+      },
+      {
+        name: "In progress",
+        id: 2,
+        color: "bg-yellow-500/40",
+        tasks: [
+          {
+            title: "Card 2",
+            id: 4,
+            description: "This is card no 2",
+          },
+        ],
+      },
+      {
+        name: "Completed",
+        id: 3,
+        color: "bg-green-700/20",
+        tasks: [
+          {
+            title: "Card 3",
+            id: 5,
+            description: "This is card no 3",
+          },
+        ],
+    }
+  ]);
 
     const [taskId, setTaskId] = useState(null);
 
-    const addNewTask = ( newTask, viewId ) => {
-        setViewItems((prevViewItems) =>{
-            prevViewItems.map((view) => 
-                view.id === viewId ? {...view, tasks: [...view.tasks, newTask]} : view
-            )
-        })
+    const isDataPresent = () => {
+      const data = localStorage.getItem("viewItems");
+
+      if(data){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
+
+    useEffect(() => {
+      const storedData = localStorage.getItem("viewItems");
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData);
+          setViewItems(data);
+        } catch (error) {
+          console.error("Error parsing stored data:", error);
+        }
+      }
+    }, []);
+    
+
+    const storeData = (data) => {
+      localStorage.setItem("viewItems", JSON.stringify(data));
+    }
+
+    const addNewTask = ( title, viewId ) => {
+        const newTask = {
+          id: Math.floor(Math.random()* 10000),
+          title,
+          description: "",
+        };
+
+        const newViewItem = viewItems.map((view) =>
+        view.id === viewId ? { ...view, tasks: [...view.tasks, newTask] } : view
+        );
+
+        setViewItems(newViewItem);
+        storeData(newViewItem);
+    };
 
     const addNewView = (name) => {
         const newView = {
@@ -99,22 +109,22 @@ export const AppProvider = ({ children }) =>{
             tasks: [],
         };
         setViewItems((prevViewItems) => [...prevViewItems, newView]);
+        storeData((prevViewItems) => [...prevViewItems, newView]);
     };
 
-    const deletetask = (taskId, viewId) =>{
-        setViewItems((prevViewItems) => {
-            prevViewItems.map((view) =>
+    const deleteTask = (taskId, viewId) =>{
+        const newViewItems = viewItems.map((view) =>
                 view.id === viewId ? {
                     ...view, 
                     tasks: view.tasks.filter((task) => task.id !== taskId)
                 } : view
             );
-        });
+        setViewItems(newViewItems);
+        storeData(newViewItems);
     };
 
     const updateTask = (taskId, viewId, title, description) => {
-        setViewItems((prevViewItems) =>
-          prevViewItems.map((view) =>
+      const newViewItems = viewItems.map((view) =>
             view.id === viewId
               ? {
                   ...view,
@@ -123,23 +133,37 @@ export const AppProvider = ({ children }) =>{
                   ),
                 }
               : view
-          )
-        );
+      );
+      setViewItems(newViewItems);
+      storeData(newViewItems);
     };
 
-    const chanegView = (currentTask, fromViewId, toViewId ) => {
-        setViewItems((prevViewItems) => {
-            const updatedViewitems = prevViewItems.map((view) => 
-                view.id === toViewId ? {
-                    ...view,
-                    tasks: [...view.tasks, currentTask] 
-                } : view.id === fromViewId  ? {
-                    ...view,
-                    tasks: view.tasks.filter((task) => task.id !== currentTask.id)
-                } : view
-            );
-            return updatedViewitems;
-        });
+    const changeView = (currentTask, fromViewId, toViewId ) => {
+        
+        const newTask = {
+          id: Math.floor(Math.random() * 10000),
+          title: currentTask.title,
+          description: currentTask.description,
+        };
+
+        const newViewItems = viewItems.map((view) =>
+          view.id === Number(toViewId)
+            ? { ...view, tasks: [...view.tasks, newTask] }
+            : view
+        );
+        setViewItems(newViewItems);
+
+        const newViewItem2 = newViewItems.map((view) =>
+          view.id === Number(fromViewId)
+            ? {
+                ...view,
+                tasks: view.tasks.filter((task) => task.id !== currentTask.id),
+              }
+            : view
+        );
+
+        setViewItems(newViewItem2);
+        storeData(newViewItem2);
     };
 
 
@@ -149,9 +173,9 @@ export const AppProvider = ({ children }) =>{
         setTaskId,
         addNewTask,
         addNewView,
-        deletetask,
+        deleteTask,
         updateTask,
-        chanegView
+        changeView
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
